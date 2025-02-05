@@ -25,7 +25,9 @@ namespace PeopleLibrary
         {
             using (IDbConnection cnn = new SqliteConnection(LoadConnectionString()))
             {
-                cnn.Execute("insert into Person (FirstName, LastName, EmailAddress, PhoneNumber) values (@FirstName, @LastName, @EmailAddress, @PhoneNumber)", person);
+                string savePersonSql = "insert into Person (FirstName, LastName, EmailAddress, PhoneNumber) values (@FirstName, @LastName, @EmailAddress, @PhoneNumber)";
+
+                cnn.Execute(savePersonSql, person);
             }
         }
 
@@ -35,6 +37,14 @@ namespace PeopleLibrary
             {
                 cnn.Execute($"delete from Person where Id='{id}'");
             }
+        }
+
+        public static void UpdatePerson(Person person)
+        {
+            using (IDbConnection cnn = new SqliteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("update Person set FirstName = @FirstName, LastName = @LastName, EmailAddress = @EmailAddress, PhoneNumber = @PhoneNumber where Id = @Id", person);
+            }   
         }
 
 

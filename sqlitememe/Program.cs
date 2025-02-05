@@ -1,4 +1,6 @@
-﻿using PeopleLibrary;
+﻿using Microsoft.Identity.Client;
+using PeopleLibrary;
+using System;
 
 namespace sqlitememe
 {
@@ -19,6 +21,7 @@ namespace sqlitememe
                 Console.WriteLine("[1] Enter New User");
                 Console.WriteLine("[2] Display User Information");
                 Console.WriteLine("[3] Delete User");
+                Console.WriteLine("[4] Update User");
                 Console.WriteLine("[0] Exit");
 
                 int.TryParse(Console.ReadLine(), out int input);
@@ -33,6 +36,10 @@ namespace sqlitememe
                 if(input == 3)
                 {
                     DeletePerson();
+                }
+                if (input == 4)
+                {
+                    UpdatePerson();
                 }
                 if(input == 0)
                 {
@@ -52,6 +59,71 @@ namespace sqlitememe
             people = SqliteDataAccess.LoadPeople();
         }
 
+        private static void UpdatePerson()
+        {
+            while (true)
+            {
+                DisplayPeopleList();
+
+                Console.WriteLine("\nWhich user's information do you want to update?");
+                Console.WriteLine("(Select the id you want to update):");
+
+                int.TryParse(Console.ReadLine(), out int updateInput);
+
+                Person updateUser = people.FirstOrDefault(x => x.Id == updateInput);
+
+                if (updateUser != null) {
+                    while (true) {
+
+                        Console.WriteLine($"\nId:{updateUser.Id}\nName: {updateUser.FullName}\nEmail: {updateUser.EmailAddress}\nPhone Number: {updateUser.PhoneNumber}\n-----------------------\n");
+
+                        Console.WriteLine("\nWhat do you want to update?\n");
+
+                        //prompts
+                        Console.WriteLine("[1] First Name");
+                        Console.WriteLine("[2] Last Name");
+                        Console.WriteLine("[3] Email address");
+                        Console.WriteLine("[4] Phone number");
+                        Console.WriteLine("[0] Go Back");
+
+                        int.TryParse(Console.ReadLine(), out int input);
+
+                        if (input == 1)
+                        {
+                            Console.WriteLine("Please enter a new first name:");
+                            string firstName = Console.ReadLine();
+
+                            if (firstName == null || firstName.Any(Char.IsWhiteSpace)) {
+                                Console.WriteLine("Action Cancelled");
+                                return;
+                            }
+                            else
+                            {
+                                updateUser.FirstName = firstName;
+                                SqliteDataAccess.UpdatePerson(updateUser);
+                            }
+                        }
+                        if (input == 2)
+                        {
+                            DisplayPeopleList();
+                        }
+                        if (input == 3)
+                        {
+                            DeletePerson();
+                        }
+                        if (input == 4)
+                        {
+                            DeletePerson();
+                        }
+                        if (input == 0)
+                        {
+                            return;
+                        }
+                    }
+                }
+
+            }
+        }
         private static void DeletePerson()
         {
             while (true)
