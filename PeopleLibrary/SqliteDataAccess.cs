@@ -47,7 +47,8 @@ namespace PeopleLibrary
             }   
         }
 
-
+        // TODO - Potentially add sqlite db creation method for production use
+        
         private static string LoadConnectionString(string id = "Default")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;

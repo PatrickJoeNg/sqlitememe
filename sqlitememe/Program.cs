@@ -6,6 +6,9 @@ namespace sqlitememe
 {
     internal class Program
     {
+        // TODO - potential ui clean up
+        // TODO - Code refactor?????
+
         static List<Person> people = new List<Person>();
 
         static void Main(string[] args)
