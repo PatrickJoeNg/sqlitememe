@@ -12,10 +12,10 @@ namespace sqlitememe
         {
             Console.WriteLine("Welcome! Press enter to continue");
             Console.ReadLine();
-
+            
             while (true)
             {
-                Console.WriteLine("\nWhat would you like to do?");
+                Console.WriteLine("What would you like to do?");
 
                 //prompts
                 Console.WriteLine("[1] Enter New User");
@@ -44,6 +44,7 @@ namespace sqlitememe
                 if(input == 0)
                 {
                     Console.WriteLine("Goodbye!");
+                    Console.WriteLine("Press enter to close.");
                     Console.ReadLine();
                     Environment.Exit(0);
                 }
@@ -61,6 +62,7 @@ namespace sqlitememe
 
         private static void UpdatePerson()
         {
+            Console.Clear();
             while (true)
             {
                 DisplayPeopleList();
@@ -105,15 +107,51 @@ namespace sqlitememe
                         }
                         if (input == 2)
                         {
-                            DisplayPeopleList();
+                            Console.WriteLine("Please enter a new last name:");
+                            string lastName = Console.ReadLine();
+
+                            if (lastName == null || lastName.Any(Char.IsWhiteSpace))
+                            {
+                                Console.WriteLine("Action Cancelled");
+                                return;
+                            }
+                            else
+                            {
+                                updateUser.LastName = lastName;
+                                SqliteDataAccess.UpdatePerson(updateUser);
+                            }
                         }
                         if (input == 3)
                         {
-                            DeletePerson();
+                            Console.WriteLine("Please enter a new email address:");
+                            string emailAddress = Console.ReadLine();
+
+                            if (emailAddress == null || emailAddress.Any(Char.IsWhiteSpace))
+                            {
+                                Console.WriteLine("Action Cancelled");
+                                return;
+                            }
+                            else
+                            {
+                                updateUser.EmailAddress = emailAddress;
+                                SqliteDataAccess.UpdatePerson(updateUser);
+                            }
                         }
                         if (input == 4)
                         {
-                            DeletePerson();
+                            Console.WriteLine("Please enter a new phone number:");
+                            string phoneNumber = Console.ReadLine();
+
+                            if (phoneNumber == null || phoneNumber.Any(Char.IsWhiteSpace))
+                            {
+                                Console.WriteLine("Action Cancelled");
+                                return;
+                            }
+                            else
+                            {
+                                updateUser.PhoneNumber = phoneNumber;
+                                SqliteDataAccess.UpdatePerson(updateUser);
+                            }
                         }
                         if (input == 0)
                         {
@@ -126,6 +164,7 @@ namespace sqlitememe
         }
         private static void DeletePerson()
         {
+            Console.Clear();
             while (true)
             {
                 LoadPeopleList();
@@ -148,6 +187,7 @@ namespace sqlitememe
                 }
                 if (deleteInput == 0)
                 {
+                    Console.Clear();
                     return;
                 }
             }
@@ -165,18 +205,19 @@ namespace sqlitememe
         }
         private static void CreateNewPerson()
         {
+            Console.Clear();
             Console.WriteLine("Please follow the prompts carefully");
 
-            Console.WriteLine("Please your first name:");
+            Console.WriteLine("\nPlease your first name:");
             string firstName = Console.ReadLine();
 
-            Console.WriteLine("Please your last name:");
+            Console.WriteLine("\nPlease your last name:");
             string lastNamee = Console.ReadLine();
 
-            Console.WriteLine("Please your email address:");
+            Console.WriteLine("\nPlease your email address:");
             string email = Console.ReadLine();
 
-            Console.WriteLine("Please your phoneNumber:");
+            Console.WriteLine("\nPlease your phoneNumber:");
             string phoneNumber = Console.ReadLine();
 
             Person newPerson =  CreatePerson(firstName, lastNamee, email, phoneNumber);
