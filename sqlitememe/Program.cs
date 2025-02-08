@@ -15,9 +15,10 @@ namespace sqlitememe
         {
             Console.WriteLine("Welcome! Press enter to continue");
             Console.ReadLine();
-            
+            Console.Clear();
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("What would you like to do?");
 
                 //prompts
@@ -27,24 +28,30 @@ namespace sqlitememe
                 Console.WriteLine("[4] Update User");
                 Console.WriteLine("[0] Exit");
 
-                int.TryParse(Console.ReadLine(), out int input);
-                if (input == 1)
+                //int.TryParse(Console.ReadLine(), out int input);
+                char input = Console.ReadKey(true).KeyChar;
+                
+                if (input == '1')
                 {
+                    Console.Clear();
                     CreateNewPerson();
                 }
-                if (input == 2)
+                if (input == '2')
                 {
+                    Console.Clear();
                     DisplayPeopleList();
                 }
-                if(input == 3)
+                if(input == '3')
                 {
+                    Console.Clear();
                     DeletePerson();
                 }
-                if (input == 4)
+                if (input == '4')
                 {
+                    Console.Clear();
                     UpdatePerson();
                 }
-                if(input == 0)
+                if(input == '0')
                 {
                     Console.WriteLine("Goodbye!");
                     Console.WriteLine("Press enter to close.");
@@ -65,9 +72,9 @@ namespace sqlitememe
 
         private static void UpdatePerson()
         {
-            Console.Clear();
             while (true)
             {
+                Console.Clear();
                 DisplayPeopleList();
 
                 Console.WriteLine("\nWhich user's information do you want to update?");
@@ -78,6 +85,8 @@ namespace sqlitememe
                 Person updateUser = people.FirstOrDefault(x => x.Id == updateInput);
 
                 if (updateUser != null) {
+                    Console.Clear();
+                    Console.WriteLine($"User: {updateUser.Id} Selected.\n");
                     while (true) {
 
                         Console.WriteLine($"\nId:{updateUser.Id}\nName: {updateUser.FullName}\nEmail: {updateUser.EmailAddress}\nPhone Number: {updateUser.PhoneNumber}\n-----------------------\n");
@@ -167,7 +176,6 @@ namespace sqlitememe
         }
         private static void DeletePerson()
         {
-            Console.Clear();
             while (true)
             {
                 LoadPeopleList();
@@ -178,6 +186,7 @@ namespace sqlitememe
                 {
                     Console.WriteLine($"\nId: {person.Id}\nName: {person.FullName}");
                 }
+
                 int.TryParse(Console.ReadLine(), out int deleteInput);
 
                 var removeUser = people.FirstOrDefault(x => x.Id == deleteInput);
@@ -202,13 +211,12 @@ namespace sqlitememe
             LoadPeopleList();
 
             foreach (Person person in people) {
-                Console.WriteLine($"\nId:{person.Id}\nName: {person.FullName}\nEmail: {person.EmailAddress}\nPhone Number: {person.PhoneNumber}\n-----------------------");
+                Console.WriteLine($"\nId:{person.Id}\nName: {person.FullName}\nEmail: {person.EmailAddress}\nPhone Number: {person.PhoneNumber}\n-----------------------\n");
             }
 
         }
         private static void CreateNewPerson()
         {
-            Console.Clear();
             Console.WriteLine("Please follow the prompts carefully");
 
             Console.WriteLine("\nPlease your first name:");
@@ -227,7 +235,7 @@ namespace sqlitememe
 
             //people.Add(newPerson);
             SqliteDataAccess.SavePerson(newPerson);
-
+            Console.Clear();
             Console.WriteLine("\nNew User Created!");
         }
 
