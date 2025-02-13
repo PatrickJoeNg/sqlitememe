@@ -19,6 +19,8 @@ namespace sqlitememe
             while (true)
             {
                 Console.Clear();
+                LoadPeopleList();
+                Console.WriteLine($"There are {people.Count} users in the database.");
                 Console.WriteLine("What would you like to do?");
 
                 //prompts
@@ -76,7 +78,6 @@ namespace sqlitememe
             {
                 Console.Clear();
                 DisplayPeopleList();
-
                 Console.WriteLine("\nWhich user's information do you want to update?");
                 Console.WriteLine("(Select the id you want to update):");
 
@@ -213,6 +214,8 @@ namespace sqlitememe
             foreach (Person person in people) {
                 Console.WriteLine($"\nId:{person.Id}\nName: {person.FullName}\nEmail: {person.EmailAddress}\nPhone Number: {person.PhoneNumber}\n-----------------------\n");
             }
+            Console.WriteLine("Press any key to go back.");
+            char input = Console.ReadKey(true).KeyChar;
 
         }
         private static void CreateNewPerson()
